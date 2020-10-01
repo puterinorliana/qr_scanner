@@ -27,9 +27,21 @@ class _Scanner extends State<Scanner> {
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              Text(
-                qrResult,
-                textAlign: TextAlign.center,
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue,width: 3.0)
+                ),
+                width: 140,
+                height: 140,
+                child: Text(
+                  qrResult,
+                  textAlign: TextAlign.center,
+                  maxLines: 4,
+                  softWrap: true,
+                  style: TextStyle(fontSize: 18),
+
+                ),
               ),
               SizedBox(
                 height: 20.0,
