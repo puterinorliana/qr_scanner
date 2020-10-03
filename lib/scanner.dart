@@ -7,10 +7,12 @@ class Scanner extends StatefulWidget {
 }
 
 class _Scanner extends State<Scanner> {
-  String qrResult = 'Not Scanned Yet';
+  var qrResult = "Not Scanned Yet";
 
   @override
   Widget build(BuildContext context) {
+    List<String> strings = qrResult.split(",");
+    print('try $strings');
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -30,18 +32,26 @@ class _Scanner extends State<Scanner> {
               Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue,width: 3.0)
-                ),
-                width: 140,
-                height: 140,
-                child: Text(
-                  qrResult,
-                  textAlign: TextAlign.center,
-                  maxLines: 4,
-                  softWrap: true,
-                  style: TextStyle(fontSize: 18),
-
-                ),
+                    border: Border.all(color: Colors.blue, width: 3.0)),
+                // width: 140,
+                // height: 140,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: strings.length,
+                    itemBuilder: (context, index) {
+                      final value = strings[index];
+                      return Column(
+                        children: [
+                          Text(
+                            value,
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                            maxLines: 4,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      );
+                    }),
               ),
               SizedBox(
                 height: 20.0,
@@ -49,24 +59,27 @@ class _Scanner extends State<Scanner> {
               Container(
                 width: 200,
                 child: FlatButton(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'Open Camera For Scan Here',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color: Colors.blue, width: 3.0),
-                  ),
-                  onPressed: () async {
-                    String scaning = await BarcodeScanner.scan();
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Open Camera For Scan Here',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: Colors.blue, width: 3.0),
+                    ),
+                    onPressed: () async {
+                      String scaning = await BarcodeScanner.scan();
 
-                    setState(() {
-                      qrResult = scaning;
-                    });
-                    }
-                ),
+                      setState(() {
+                        qrResult = scaning;
+                        strings.map((item) {
+                          print('hello $item ');
+                          return item;
+                        }).toList();
+                      });
+                    }),
               ),
             ],
           ),
